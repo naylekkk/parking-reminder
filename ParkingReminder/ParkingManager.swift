@@ -25,7 +25,7 @@ final class ParkingManager: NSObject, ObservableObject, CLLocationManagerDelegat
     static let shared = ParkingManager()
 
     /// Intervalle entre deux rappels (2 heures). Mets 60 pour tester rapidement.
-    static let reminderInterval: TimeInterval = 2 * 60 * 60
+    static let reminderInterval: TimeInterval = 60   // TEST : 1 min (remettre 2 * 60 * 60)
 
     @Published private(set) var spots: [ParkingSpot] = []
     @Published private(set) var activeSpotIDs: Set<UUID> = []     // adresses où tu es actuellement
@@ -125,7 +125,7 @@ final class ParkingManager: NSObject, ObservableObject, CLLocationManagerDelegat
 
         // 2) Rappel répété toutes les 2 h — annulé automatiquement quand tu quittes la zone
         let reminder = UNMutableNotificationContent()
-        reminder.title = "⏰ Parking : 2 h écoulées"
+        reminder.title = "⏰ Rappel parking"
         reminder.body = "Tu es toujours à \(spot.name). Pense à reprendre un ticket."
         reminder.sound = .default
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: Self.reminderInterval, repeats: true)
